@@ -1,3 +1,5 @@
+const path = require('path')
+
 const express = require('express')
 const dotenv = require('dotenv')
 const colors = require('colors')
@@ -21,12 +23,15 @@ DBConnection()
 const authRoutes = require('./routes/auth')
 const userRoutes = require('./routes/users')
 const postRoutes = require('./routes/posts')
+const commentRoutes = require('./routes/comments')
 
 const app = express()
 
 app.use(express.json())
 
 app.use(cookieParser())
+
+app.use(express.static(path.join(__dirname, 'public')))
 
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'))
@@ -60,6 +65,7 @@ const versionOne = routeName => `/api/v1/${routeName}`
 app.use(versionOne('auth'), authRoutes)
 app.use(versionOne('users'), userRoutes)
 app.use(versionOne('posts'), postRoutes)
+app.use(versionOne('comments'), commentRoutes)
 
 app.use(errorHandler)
 

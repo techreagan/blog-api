@@ -1,20 +1,32 @@
 const express = require('express')
-const { getPosts } = require('../controllers/posts')
+const {
+  getPosts,
+  getPost,
+  createPost,
+  updatePost,
+  deletePost
+} = require('../controllers/posts')
 
 const Post = require('../models/Post')
-
-// const router = express.Router({ mergeParams: true })
 
 const advancedResults = require('../middleware/advancedResults')
 const { protect, authorize } = require('../middleware/auth')
 
-router.route('/').get(advancedResults(Post), getPosts)
-// .post(createUser)
+const commentRoutes = require('./comments')
 
-// router
-//   .route('/:id')
-//   .get(getUser)
-//   .put(updateUser)
-//   .delete(deleteUser)
+const router = express.Router()
+
+router.use('/:id/comments', commentRoutes)
+
+router
+  .route('/')
+  .get(advancedResults(Post, 'comments'), getPosts)
+  .post(protect, createPost)
+
+router
+  .route('/:id')
+  .get(getPost)
+  .put(protect, authorize('guest', 'admin'), updatePost)
+  .delete(protect, authorize('admin'), deletePost)
 
 module.exports = router
