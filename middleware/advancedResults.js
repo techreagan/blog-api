@@ -1,6 +1,6 @@
 // @eg      housing=true&select=name,location.city&sort=-name,location.state
 // ?averageCost[lte]=10000
-const advancedResults = (model, populate) => async (req, res, next) => {
+const advancedResults = (model, populates) => async (req, res, next) => {
   let query
 
   const reqQuery = { ...req.query }
@@ -36,9 +36,19 @@ const advancedResults = (model, populate) => async (req, res, next) => {
 
   query = query.skip(startIndex).limit(limit)
 
-  if (populate) {
-    query = query.populate(populate)
+  if (populates) {
+    populates.forEach(populate => {
+      query = query.populate(populate)
+    })
   }
+
+  // if (populate && populate[0]) {
+  //   query = query.populate(populate[0])
+  // }
+
+  // if (populate && populate[1]) {
+  //   query = query.populate(populate[1])
+  // }
 
   const results = await query
 

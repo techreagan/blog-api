@@ -4,7 +4,8 @@ const {
   getPost,
   createPost,
   updatePost,
-  deletePost
+  deletePost,
+  postBannerUpload
 } = require('../controllers/posts')
 
 const Post = require('../models/Post')
@@ -20,7 +21,13 @@ router.use('/:id/comments', commentRoutes)
 
 router
   .route('/')
-  .get(advancedResults(Post, 'comments'), getPosts)
+  .get(
+    advancedResults(Post, [
+      'comments',
+      { path: 'user', select: 'firstName lastName email -_id' }
+    ]),
+    getPosts
+  )
   .post(protect, createPost)
 
 router
@@ -28,5 +35,7 @@ router
   .get(getPost)
   .put(protect, authorize('guest', 'admin'), updatePost)
   .delete(protect, authorize('admin'), deletePost)
+
+router.put('/:id/banner', protect, postBannerUpload)
 
 module.exports = router

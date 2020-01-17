@@ -1,3 +1,5 @@
+const path = require('path')
+
 const asyncHandler = require('../middleware/async')
 const ErrorResponse = require('../utils/errorResponse')
 const Post = require('../models/Post')
@@ -73,29 +75,29 @@ exports.deletePost = asyncHandler(async (req, res, next) => {
 })
 
 // @desc    Upload banner image for post
-// @route   PUT /api/v1/post/:id/banner
+// @route   PUT /api/v1/posts/:id/banner
 // @access  Private
 exports.postBannerUpload = asyncHandler(async (req, res, next) => {
   const post = await Post.findById(req.params.id)
   if (!post) {
     return next(
-      new ErrorReponse(`Post not found with id of ${req.params.id}`, 404)
+      new ErrorResponse(`Post not found with id of ${req.params.id}`, 404)
     )
   }
 
   if (!req.files) {
-    return next(new ErrorReponse(`Please upload a file`, 404))
+    return next(new ErrorResponse(`Please upload a file`, 404))
   }
 
   const file = req.files.file
 
   if (!file.mimetype.startsWith('image')) {
-    return next(new ErrorReponse(`Please upload an image file`, 404))
+    return next(new ErrorResponse(`Please upload an image file`, 404))
   }
 
   if (file.size > process.env.MAX_FILE_UPLOAD) {
     return next(
-      new ErrorReponse(
+      new ErrorResponse(
         `Please upload an image less than ${process.env.MAX_FILE_UPLOAD /
           1000 /
           1000}mb`,
@@ -109,7 +111,7 @@ exports.postBannerUpload = asyncHandler(async (req, res, next) => {
   file.mv(`${process.env.FILE_UPLOAD_PATH}/${file.name}`, async err => {
     if (err) {
       console.error(err)
-      return next(new ErrorReponse(`Problem with file upload`, 500))
+      return next(new ErrorResponse(`Problem with file upload`, 500))
     }
 
     await Post.findByIdAndUpdate(req.params.id, { banner_image: file.name })

@@ -1,17 +1,38 @@
-# NodeJS / ExpressJS MongoDB(Mongoose) Boilerplate
+# Blog RESTful API
 
-This is my boilerplate for RESTful API with NodeJS and MongoDB.
+> This is a minimal blog api with some advance features developed using NodeJS, ExpressJS and MongoDB. If you are looking for a free RESTful API to interact with feel free to use this. It's open source.
 
-## Boilerplate Features
-* Authentication with JWT (Reset Password with email)
-* User Create, Read, Update and Delete (CRUD) operations
-* API Security (NoSQL Injections, XSS Attacks, http param pollution etc)
+## Features
+
+---
+
+- Authentication with JWT (Reset Password with email)
+- User Create, Read, Update and Delete (CRUD) operations
+- CRUD operations for blog post including uploading banner image for post
+- Visitors can leave a comment
+- Pagination and search where necessary
+- API Security (NoSQL Injections, XSS Attacks, http param pollution etc)
+
+## Database Model
+
+---
+
+Though the diagram uses sql data type, this diagram is to show you the various collections in the mongo database.
+
+![Screenshot](public/Blog-API-DB-Models.png)
+
+## Requirement
+
+- NodeJS
+- MongoDB
 
 ## Configuration File
 
+---
+
 Modify the config/.env file to your environment variables, set your JWT_SECRET and SMTP variables
 
-``` ENV
+```ENV
 NODE_ENV=development
 PORT=3001
 
@@ -29,32 +50,49 @@ FROM_EMAIL=noreply@boilerplate.com
 FROM_NAME=Boilerplate
 ```
 
+Email testing: use mailtrap for email testing, it's easy no stress.
+
 ## Installation
+
+---
+
 Install all npm dependecies
-``` console
+
+```console
 npm install
 ```
 
 Install nodemon globally
-``` console
+
+```console
 npm install -g nodemon
 ```
 
 Run database seeder
-``` console
+
+- Seeder folder is \_data/
+- Edit the seeder file if you want to
+
+```console
 node seeder -i
 ```
 
 Delete all data
-``` console
+
+```console
 node seeder -d
 ```
 
-## Run Boilerplate
-``` console
+## Start web and database server
+
+```console
 node run dev
 ```
 
 ## License
 
 This project is licensed under the MIT License
+
+## Developed by Reagan Ekhameye (Tech Reagan)
+
+Reach me on twitter [@techreagan](https://www.twitter.com/techreagan)

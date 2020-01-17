@@ -12,7 +12,7 @@ exports.getComments = asyncHandler(async (req, res, next) => {
 
 // @desc    Create comment
 // @route   POST /api/v1/posts/:id/comments
-// @access  Private
+// @access  Public
 exports.createComment = asyncHandler(async (req, res, next) => {
   const { name, body } = req.body
   const { id } = req.params
@@ -39,7 +39,7 @@ exports.deleteComment = asyncHandler(async (req, res, next) => {
   const comment = await Comment.findByIdAndDelete(id)
 
   if (!comment) {
-    return new ErrorResponse(`Comment with id ${id} not found`, 404)
+    return next(new ErrorResponse(`Comment with id ${id} not found`, 404))
   }
 
   res.status(200).json({ success: true, data: {} })

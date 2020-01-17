@@ -72,16 +72,20 @@ exports.getMe = asyncHandler(async (req, res, next) => {
 })
 
 // @desc    Update user details
-// @route   POST /api/v1/auth/updatedetails
+// @route   PUT /api/v1/auth/updatedetails
 // @access  Private
 exports.updateDetails = asyncHandler(async (req, res, next) => {
   const fieldsToUpdate = {
-    name: req.body.name,
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
     email: req.body.email
   }
+
   const user = await User.findByIdAndUpdate(req.user.id, fieldsToUpdate, {
     new: true,
     runValidators: true
+  }).catch(err => {
+    res.status(400).json({ success: false, data: 'Email already exists' })
   })
 
   res.status(200).json({ success: true, data: user })
@@ -94,7 +98,7 @@ exports.updatePassword = asyncHandler(async (req, res, next) => {
   const user = await User.findById(req.user.id).select('+password')
 
   if (!(await user.matchPassword(req.body.currentPassword))) {
-    return next(new ErrorReponse('Password is incorrect', 401))
+    return next(new ErrorResponse('Current password is incorrect', 401))
   }
 
   user.password = req.body.newPassword
