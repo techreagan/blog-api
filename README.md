@@ -4,8 +4,6 @@
 
 ## Features
 
----
-
 - Authentication with JWT (Reset Password with email)
 - User Create, Read, Update and Delete (CRUD) operations
 - CRUD operations for blog post including uploading banner image for post
@@ -15,15 +13,11 @@
 
 ## API Documentation
 
----
-
 Hosted on netlify: [Blog API](https://blog-api-docs-77ae6a.netlify.com/)
 
 Extensive and testing documentation with postman: [Blog API](https://documenter.getpostman.com/view/9407876/SWLmX4jq?version=latest)
 
 ## Database Model
-
----
 
 Though the diagram uses sql data type, this diagram is to show you the various collections in the mongo database.
 
@@ -35,8 +29,6 @@ Though the diagram uses sql data type, this diagram is to show you the various c
 - MongoDB
 
 ## Configuration File
-
----
 
 Modify the config/.env file to your environment variables, set your JWT_SECRET and SMTP variables
 
@@ -61,8 +53,6 @@ FROM_NAME=Boilerplate
 Email testing: use mailtrap for email testing, it's easy no stress.
 
 ## Installation
-
----
 
 Install all npm dependecies
 
