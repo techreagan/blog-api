@@ -81,7 +81,7 @@ Delete all data
 node seeder -d
 ```
 
-## Start web and database server
+## Start web server
 
 ```console
 node run dev
