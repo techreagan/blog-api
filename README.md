@@ -13,6 +13,14 @@
 - Pagination and search where necessary
 - API Security (NoSQL Injections, XSS Attacks, http param pollution etc)
 
+## API Documentation
+
+---
+
+Hosted on netlify: [Blog API](https://blog-api-docs-77ae6a.netlify.com/)
+
+Extensive and testing documentation with postman: [Blog API](https://documenter.getpostman.com/view/9407876/SWLmX4jq?version=latest)
+
 ## Database Model
 
 ---

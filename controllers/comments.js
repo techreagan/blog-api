@@ -7,7 +7,14 @@ const Post = require('../models/Post')
 // @route   GET /api/v1/posts/:id/comments
 // @access  Public
 exports.getComments = asyncHandler(async (req, res, next) => {
-  res.status(200).json(res.advancedResults)
+  const { id } = req.params
+  const post = await Post.findById(id)
+  if (!post)
+    return next(new ErrorResponse(`Post not found with id of ${id}`, 404))
+
+  const comments = await Comment.find({ post: id })
+
+  res.status(200).json({ success: true, data: comments })
 })
 
 // @desc    Create comment
